@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    private $limit = 8;
     /**
      * Display a listing of the resource.
      *
@@ -17,14 +16,17 @@ class UserController extends Controller
      */
     public function index(Request $rq)
     {
-        $page = $rq['page'] ?? 1;
-        $users = User::orderBy('created_at', 'asc')->skip(($page-1)*$this->limit)->take($this->limit)->get();
+        $page = $rq->page ?? 1;
+        $limit = $rq->limit ?? 8;
+        $users = User::orderBy('created_at', 'asc')->skip(($page-1)*$limit)->take($limit)->get();
 
         return ['objects' => $users];
     }
 
-    public function getPageNum() {
-        return ['pageNum' => ceil(User::count()/$this->limit)];
+    public function getPageNum(Request $rq) {
+        $limit = $rq->limit ?? 8;
+        
+        return ['pageNum' => ceil(User::count()/$limit)];
     }
 
     /**

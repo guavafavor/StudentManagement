@@ -23,7 +23,7 @@ Route::get('schools', [SchoolController::class, 'index'])->name('schools');
 
 Route::get('roles', [RoleController::class, 'index'])->name('roles');
 
-Route::apiResource('users', UserController::class);
+Route::resource('users', UserController::class);
 
 Route::get('userpage', [UserController::class, 'getPageNum'])->name('users.page');
 

@@ -77,6 +77,9 @@
                     }
                     $('input:radio[name=gender]').filter(genderValue).prop('checked', true);
 
+                    var active = user.active == 1 ? true : false;
+                    $('#active').prop('checked', active);
+                    
                     var url = '{{ route("users.update", ":id") }}';
                     url = url.replace(':id', user.id);
                     $('#update-form').attr('data-url', url);

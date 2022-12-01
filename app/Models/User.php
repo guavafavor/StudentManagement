@@ -13,8 +13,6 @@ class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory,  SoftDeletes;
 
-    protected $timestamp = true;
-
     /**
      * The attributes that are mass assignable.
      *

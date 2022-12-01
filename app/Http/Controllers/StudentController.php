@@ -9,7 +9,6 @@ use \Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
-    private $limit = 8;
     /**
      * Display a listing of the resource.
      *.
@@ -18,8 +17,9 @@ class StudentController extends Controller
     public function index(Request $rq)
     {
         $page = $rq['page'] ?? 1;
+        $limit = $rq->limit ?? 8;
         $students = Student::with('school')->orderBy('created_at', 'asc')
-                                ->skip(($page-1)*$this->limit)->take($this->limit)->get();
+                                                ->skip(($page-1)*$limit)->take($limit)->get();
 
         return ['objects' => $students];
     }
@@ -29,9 +29,11 @@ class StudentController extends Controller
      * 
      * @return \Illuminate\Http\Response
      */
-    public function getPageNum()
+    public function getPageNum(Request $rq)
     {
-        return ['pageNum' => ceil(Student::count()/$this->limit)];
+        $limit = $rq->limit ?? 8;
+
+        return ['pageNum' => ceil(Student::count()/$limit)];
     }
 
     /**

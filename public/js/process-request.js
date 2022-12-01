@@ -34,7 +34,7 @@ function getDataForRequest(kindOfObject) {
             gender: $("input[name='gender']:checked").val(),
             phone: $('#phone').val(),
             role: $('#role').val(),
-            active: $('#active').val(),
+            active: $('#active').is(':checked') ? 1 : 0,
             password: $('#password').val()
         };
     }
@@ -156,7 +156,8 @@ $('tbody').on('click', '.delete-btn', function () {
         url: url,
         type: 'delete',
         success: function () {
-            window.location.reload();
+            var url = $('.page-item.active .page-link').attr('data-url');
+            requestPaginationData(url);
         },
         error: function (errorThrown) {
             console.log(errorThrown);
@@ -234,6 +235,7 @@ function setPagination(){
         url: root + '/api/' + pageType,
         type: 'get',
         success: function (data) {
+            console.log(data);
             for (var i = 1; i <= data.pageNum; i++){
                 var url = root + '/api/' + object + '?page=' + i;
 
@@ -245,7 +247,7 @@ function setPagination(){
                 $('.pagination').append("<li class='"+pageClass+"'><a class='page-link' data-url='"+url+"'>"+i+"</a></li>");
             }
         },
-        error: function (jqXHR, textStatus, errorThrown) {
+        error: function ( errorThrown) {
             console.log(errorThrown)
         }
     });

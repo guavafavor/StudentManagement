@@ -20,11 +20,11 @@
                 <p class="text-center text-uppercase fw-bold">Đăng nhập</p>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="text" class="form-control" name="email" id="email">
+                    <input type="email" class="form-control" name="email" id="email">
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Mật khẩu</label>
-                    <input type="text" class="form-control" name="password" id="password">
+                    <input type="password" class="form-control" name="password" id="password">
                 </div>
                 <div class="d-grid gap-2 mt-4">
                     <button class="btn btn-primary" type="submit">Xác nhận</button>
@@ -41,6 +41,7 @@ $(document).ready(function(){
         e.preventDefault();
 
         var url=$(this).attr('data-url');
+        alert(url);
 
         $.ajax({
             url: url,
@@ -55,8 +56,8 @@ $(document).ready(function(){
             success: function(msg) {
                 window.location.href = "{{ route('users') }}";
             },
-            error: function(error) {
-                console.log(error.responseText());
+            error: function(errorThrown) {
+                console.log(errorThrown);
             }
         })
     })
